@@ -13,30 +13,71 @@
       width: 100%;
       height: 100vh;
       border: none;
+      margin-top: 60px; /* account for ad banner */
+      display: block;
     }
     .footer {
+      position: fixed;
+      bottom: -100px; /* hidden by default */
+      left: 0;
       width: 100%;
       background: #fff;
       text-align: center;
       padding: 20px;
       box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      transition: bottom 0.3s ease;
+      z-index: 1001;
+    }
+    .footer.visible {
+      bottom: 0;
+    }
+    .ad-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: #fff;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
 
   <!-- Ad banner at top -->
-  <div style="position:fixed; top:0; left:0; width:100%; height:60px; background:#fff; z-index:1000; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+  <div class="ad-banner">
     <p style="margin:0;">Ad space</p>
   </div>
 
   <!-- Square site iframe -->
-  <iframe src="https://noahfallu.square.site" class="iframe-wrapper" style="margin-top:60px;"></iframe>
+  <iframe src="https://noahfallu.square.site" class="iframe-wrapper"></iframe>
 
-  <!-- Custom footer (appears only when you scroll past iframe) -->
-  <div class="footer">
+  <!-- Custom footer -->
+  <div class="footer" id="customFooter">
     <p>© 2025 Noah Fallu — All rights reserved.</p>
   </div>
+
+  <script>
+    const footer = document.getElementById("customFooter");
+    const iframe = document.querySelector(".iframe-wrapper");
+
+    // Watch when the iframe is fully scrolled into view
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          footer.classList.add("visible");
+        } else {
+          footer.classList.remove("visible");
+        }
+      });
+    }, { threshold: 1.0 });
+
+    observer.observe(iframe);
+  </script>
 
 </body>
 </html>
