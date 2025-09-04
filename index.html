@@ -8,6 +8,7 @@
     body {
       margin: 0;
       padding: 0;
+      min-height: 200vh; /* gives some extra scroll room */
     }
     .iframe-wrapper {
       width: 100%;
@@ -21,7 +22,7 @@
       bottom: -100px; /* hidden by default */
       left: 0;
       width: 100%;
-      height: 60px;  /* adjust to match Square footer height */
+      height: 60px; /* adjust to match Square footer height */
       background: #fff;
       transition: bottom 0.3s ease;
       z-index: 1001;
@@ -58,20 +59,19 @@
 
   <script>
     const footer = document.getElementById("customFooter");
-    const iframe = document.querySelector(".iframe-wrapper");
 
-    // Watch when the iframe bottom is fully in view
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          footer.classList.add("visible");
-        } else {
-          footer.classList.remove("visible");
-        }
-      });
-    }, { threshold: 1.0 });
+    window.addEventListener("scroll", () => {
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
 
-    observer.observe(iframe);
+      // Show footer if near bottom
+      if (scrollY + viewportHeight >= docHeight - 150) {
+        footer.classList.add("visible");
+      } else {
+        footer.classList.remove("visible");
+      }
+    });
   </script>
 
 </body>
