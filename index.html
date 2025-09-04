@@ -21,10 +21,8 @@
       bottom: -100px; /* hidden by default */
       left: 0;
       width: 100%;
+      height: 60px;  /* adjust to match Square footer height */
       background: #fff;
-      text-align: center;
-      padding: 20px;
-      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
       transition: bottom 0.3s ease;
       z-index: 1001;
     }
@@ -42,7 +40,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
   </style>
 </head>
@@ -56,16 +53,14 @@
   <!-- Square site iframe -->
   <iframe src="https://noahfallu.square.site" class="iframe-wrapper"></iframe>
 
-  <!-- Custom footer -->
-  <div class="footer" id="customFooter">
-    <p>© 2025 Noah Fallu — All rights reserved.</p>
-  </div>
+  <!-- Custom footer (blank white) -->
+  <div class="footer" id="customFooter"></div>
 
   <script>
     const footer = document.getElementById("customFooter");
     const iframe = document.querySelector(".iframe-wrapper");
 
-    // Watch when the iframe is fully scrolled into view
+    // Watch when the iframe bottom is fully in view
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
